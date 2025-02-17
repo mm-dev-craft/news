@@ -1,0 +1,8 @@
+de:
+  anmimi:
+    cors:
+      host: "http://anmimi.de"
+    headlines:
+      crawlingDelayInHours: 1
+      matchingWords:
+

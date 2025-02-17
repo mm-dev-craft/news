@@ -1,0 +1,34 @@
+spring:
+  ai:
+    openai:
+      chat:
+        api-key:
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: WARN
+    de:
+      anmimi:
+        headlines: DEBUG
+
+de:
+  anmimi:
+    cors:
+      host: "http://localhost:5173"
+    headlines:
+        matching-words:
+          - War
+          - US Politics
+          - DonalD Trump
+          - German Politics
+          - German Election
+          - Economy
+          - AI
+          - Stocks
+          - Photography
+          - Travel
+          - James Bond

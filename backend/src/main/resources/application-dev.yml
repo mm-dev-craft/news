@@ -2,7 +2,7 @@ spring:
   ai:
     openai:
       chat:
-        api-key:
+        api-key: ${OPENAI_API_KEY}
 logging:
   level:
     org:
@@ -21,14 +21,11 @@ de:
       host: "http://localhost:5173"
     headlines:
         matching-words:
-          - War
-          - US Politics
-          - DonalD Trump
-          - German Politics
-          - German Election
+          - Politic
+          - Europe
+          - Technology
+          - Business
           - Economy
-          - AI
-          - Stocks
-          - Photography
-          - Travel
-          - James Bond
+          - USA
+          - Ukraine
+          - Russia

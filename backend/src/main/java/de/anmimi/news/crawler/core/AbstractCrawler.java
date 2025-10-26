@@ -1,5 +1,7 @@
 package de.anmimi.news.crawler.core;
 
+import de.anmimi.news.crawler.core.client.CrawlerClient;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -9,7 +11,10 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 @Slf4j
+@RequiredArgsConstructor
 public abstract class AbstractCrawler implements Crawler {
+
+    protected final CrawlerClient client;
 
     @Override
     @Async
@@ -70,10 +75,22 @@ public abstract class AbstractCrawler implements Crawler {
         return simpleName;
     }
 
+    @Override
+    public CompletableFuture<LinkAndDescription> crawleText(String url) {
+        Elements elements = client.load(url, "p");
+        String description = elements.text();
+        return CompletableFuture.completedFuture(new LinkAndDescription(url, description));
+    }
+
     protected abstract Elements executeCrawling();
 
     protected abstract TitleAndLink extractHeadLinesAndLinksFromDom(Element element);
 
-    protected abstract List<TitleAndLink> extractMultipleHeadLinesAndLinksFromDom(Element element);
+    protected List<TitleAndLink> extractMultipleHeadLinesAndLinksFromDom(Element element) {
+        log.debug("The {} does not provide multiple headlines and links. Skipping this element.", this.getClass().getSimpleName());
+        return List.of();
+    }
+
+    ;
 
 }

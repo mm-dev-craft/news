@@ -1,14 +1,13 @@
-package de.anmimi.news.data;
+package de.anmimi.news.headlines.data;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-public interface HeadlineRepository extends MongoRepository<Headline, Long> {
+public interface HeadlineRepository extends MongoRepository<Headline, String> {
     List<Headline> findByCrawlingDateAfterOrderByCrawlingDateDesc(LocalDateTime localDateTime);
 
     boolean existsByLinkAndSource(String link, String source);

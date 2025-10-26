@@ -1,4 +1,7 @@
 package de.anmimi.news.crawler.core;
 
-public record LinkAndDescription() {
+public record LinkAndDescription(
+        String link,
+        String description
+) {
 }

@@ -1,6 +1,7 @@
 package de.anmimi.news.crawler.core.implementation;
 
 import de.anmimi.news.crawler.core.AbstractCrawler;
+import de.anmimi.news.crawler.core.LinkAndDescription;
 import de.anmimi.news.crawler.core.client.CrawlerClient;
 import de.anmimi.news.crawler.core.TitleAndLink;
 import lombok.RequiredArgsConstructor;
@@ -9,13 +10,16 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
-@RequiredArgsConstructor
 @Slf4j
 public class NYTCrawler extends AbstractCrawler {
 
     private static final String NEW_YORK_TIMES = "https://www.nytimes.com/";
-    private final CrawlerClient client;
+
+    public NYTCrawler(CrawlerClient client) {
+        super(client);
+    }
 
     @Override
     protected Elements executeCrawling() {
@@ -31,9 +35,4 @@ public class NYTCrawler extends AbstractCrawler {
         return new TitleAndLink(title, link);
     }
 
-    @Override
-    protected List<TitleAndLink> extractMultipleHeadLinesAndLinksFromDom(Element element) {
-        log.warn("The NYT does not provide multiple headlines and links. Skipping this element.");
-        return List.of();
-    }
 }

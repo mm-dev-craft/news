@@ -1,0 +1,5 @@
+### Compare news
+POST http://localhost:8080/news/67c34be730cab54ebfb239e6/compare
+
+### Get News
+GET http://localhost:8080/news/all?pastHours=1

@@ -4,11 +4,11 @@ import de.anmimi.news.config.HeadlinesConfig;
 import de.anmimi.news.crawler.core.TitleAndLink;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.prompt.ChatOptions;
-import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.core.ParameterizedTypeReference;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class AIContextFilter implements ContentFilter {
 
-    private final ChatClient chatClient;
+    private final ChatClient chat;
     private final Set<String> relevantKeywords;
 
     private static final String SYSTEM_TEMPLATE = """
@@ -40,14 +40,8 @@ public class AIContextFilter implements ContentFilter {
             Your task is to identify those entries that are contextually relevant to the following keywords: {keywords}.
             """;
 
-    public AIContextFilter(OpenAiChatModel chatModel, HeadlinesConfig headlinesConfig) {
-        this.chatClient = ChatClient.builder(chatModel)
-                .defaultOptions(ChatOptions.builder()
-                        .model("gpt-4o-mini")
-                        .temperature(0.1)
-                        .build())
-                .build();
-
+    public AIContextFilter(ChatClient gpt4o, HeadlinesConfig headlinesConfig) {
+        this.chat = gpt4o;
         this.relevantKeywords = new HashSet<>(headlinesConfig.matchingWords());
     }
 
@@ -64,11 +58,9 @@ public class AIContextFilter implements ContentFilter {
                 .map(tl -> tl.title() + " :: " + tl.link())
                 .collect(Collectors.joining(" | "));
 
-        log.debug("Sending entries to LLM for filtering...");
-
         List<TitleAndLinkWithKeyword> relevantItems;
         try {
-            relevantItems = chatClient
+            relevantItems = chat
                     .prompt()
                     .system(systemSpec -> systemSpec.text(SYSTEM_TEMPLATE))
                     .user(userSpec -> userSpec

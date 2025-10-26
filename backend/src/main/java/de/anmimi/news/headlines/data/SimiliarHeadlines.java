@@ -1,6 +1,4 @@
-package de.anmimi.news.headlines;
-
-import de.anmimi.news.data.Headline;
+package de.anmimi.news.headlines.data;
 
 import java.util.Set;
 

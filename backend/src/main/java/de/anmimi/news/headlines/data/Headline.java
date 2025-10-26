@@ -1,4 +1,4 @@
-package de.anmimi.news.data;
+package de.anmimi.news.headlines.data;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

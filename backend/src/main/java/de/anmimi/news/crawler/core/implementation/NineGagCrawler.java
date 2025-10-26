@@ -3,6 +3,7 @@ package de.anmimi.news.crawler.core.implementation;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.anmimi.news.crawler.core.AbstractCrawler;
+import de.anmimi.news.crawler.core.LinkAndDescription;
 import de.anmimi.news.crawler.core.client.CrawlerClient;
 import de.anmimi.news.crawler.core.TitleAndLink;
 import lombok.RequiredArgsConstructor;
@@ -13,20 +14,24 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@RequiredArgsConstructor
 @Slf4j
 public class NineGagCrawler extends AbstractCrawler {
 
     private static final String NINEGAG = "https://9gag.com";
     private static final Pattern JSON_REGEX = Pattern.compile("window\\._config\\s*=\\s*JSON\\.parse\\(\"(.*?)\"\\);", Pattern.DOTALL);
 
-    private final CrawlerClient client;
     private final ObjectMapper mapper;
+
+    public NineGagCrawler(CrawlerClient client, ObjectMapper mapper) {
+        super(client);
+        this.mapper = mapper;
+    }
 
 
     @Override
@@ -70,7 +75,7 @@ public class NineGagCrawler extends AbstractCrawler {
         if (matcher.find()) {
             return Optional.of(matcher.group(1));
         }
-        log.warn("No matching JSON found in element");
+        log.debug("No matching JSON found in element");
         return Optional.empty();
     }
 
@@ -100,4 +105,5 @@ public class NineGagCrawler extends AbstractCrawler {
         log.info("Extracted headline: Title='{}', URL='{}'", title, url);
         return new TitleAndLink(title, url);
     }
+
 }

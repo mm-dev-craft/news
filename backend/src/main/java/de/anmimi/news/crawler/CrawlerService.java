@@ -4,7 +4,7 @@ import de.anmimi.news.crawler.core.Crawler;
 import de.anmimi.news.crawler.filter.ContentFilter;
 import de.anmimi.news.crawler.filter.FilterdContent;
 import de.anmimi.news.crawler.core.HeadlineSourceAndContent;
-import de.anmimi.news.data.Headline;
+import de.anmimi.news.headlines.data.Headline;
 import de.anmimi.news.headlines.HeadlineService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +55,7 @@ public class CrawlerService {
     private Stream<Headline> filterAndParseToHeadlines(HeadlineSourceAndContent headlineSourceAndContent) {
         log.debug("Crawled Headlines count for: {} is {}", headlineSourceAndContent.source(), headlineSourceAndContent.content().size());
         FilterdContent filterdContent = filter.filterRelevantContent(headlineSourceAndContent.content());
+        log.info("Filtered Headlines count for: {} is {}", headlineSourceAndContent.source(), filterdContent.content().size());
         return filterdContent.content()
                 .stream()
                 .map(titleAndLinkWithKeyword ->

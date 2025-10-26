@@ -16,9 +16,9 @@
     </modules>
 
     <properties>
-        <java.version>22</java.version>
-        <spring-boot.version>3.4.2</spring-boot.version>
-        <spring-ai.version>1.0.0-M5</spring-ai.version>
+        <java.version>24</java.version>
+        <spring-boot.version>3.5.7</spring-boot.version>
+        <spring-ai.version>1.1.0-M3</spring-ai.version>
     </properties>
 
     <!-- Import BOMs for Spring Boot and Spring AI -->

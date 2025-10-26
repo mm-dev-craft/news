@@ -1,12 +1,11 @@
 package de.anmimi.news.controller;
 
-import de.anmimi.news.data.Headline;
+import de.anmimi.news.headlines.HeadlineSummaryResult;
+import de.anmimi.news.headlines.data.Headline;
+import de.anmimi.news.headlines.CompareService;
 import de.anmimi.news.headlines.HeadlineService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,6 +14,7 @@ import java.util.List;
 @RequestMapping("/news")
 public class NewsController {
     private final HeadlineService headlineService;
+    private final CompareService compareService;
 
     @GetMapping
     public List<Headline> headlinesOfLastThreeHours() {
@@ -27,6 +27,11 @@ public class NewsController {
             return headlineService.findHeadLinesOfLast(pastHours);
         }
         return headlineService.getAllHeadlines();
+    }
+
+    @PostMapping("/{id}/compare")
+    public List<HeadlineSummaryResult> compareHeadline(@PathVariable String id) {
+        return compareService.searchForSimiliar(id);
     }
 
 }

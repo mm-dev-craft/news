@@ -1,7 +1,6 @@
 package de.anmimi.news.crawler.core.implementation;
 
 import de.anmimi.news.crawler.core.AbstractCrawler;
-import de.anmimi.news.crawler.core.HeadlineSourceAndContent;
 import de.anmimi.news.crawler.core.LinkAndDescription;
 import de.anmimi.news.crawler.core.TitleAndLink;
 import de.anmimi.news.crawler.core.client.CrawlerClient;
@@ -13,12 +12,14 @@ import org.jsoup.select.Elements;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-@RequiredArgsConstructor
 @Slf4j
-public class AljazeraCrawler extends AbstractCrawler {
+public class AljazeeraCrawler extends AbstractCrawler {
 
     private static final String ALJAZEERA_COM = "https://www.aljazeera.com";
-    private final CrawlerClient client;
+
+    public AljazeeraCrawler(CrawlerClient client) {
+        super(client);
+    }
 
     @Override
     protected Elements executeCrawling() {
@@ -34,16 +35,4 @@ public class AljazeraCrawler extends AbstractCrawler {
         return new TitleAndLink(headlineText, link);
     }
 
-    @Override
-    protected List<TitleAndLink> extractMultipleHeadLinesAndLinksFromDom(Element elements) {
-        log.warn("The Aljazera does not provide multiple headlines and links. Skipping this element.");
-        return List.of();
-    }
-
-    @Override
-    public CompletableFuture<LinkAndDescription> crawleText(String url) {
-        Elements elements = client.load(url, "p");
-        String description = elements.text();
-        return CompletableFuture.completedFuture(new LinkAndDescription(url, description));
-    }
 }

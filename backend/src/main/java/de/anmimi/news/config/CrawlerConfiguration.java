@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CrawlerConfiguration {
 
-    @Bean
+   @Bean
     public CrawlerClient jsoupCrawlerClient() {
         return new JSoupCrawlerClient(new JSoupLoader());
     }
@@ -25,8 +25,13 @@ public class CrawlerConfiguration {
     }
 
     @Bean
+    public Crawler theguardian(@Qualifier("jsoupCrawlerClient") CrawlerClient crawlerClient) {
+        return new TheGuardianCrawler(crawlerClient);
+    }
+
+    @Bean
     public Crawler aljazeera(@Qualifier("seleniumCrawlerClient") CrawlerClient crawlerClient) {
-        return new AljazeraCrawler(crawlerClient);
+        return new AljazeeraCrawler(crawlerClient);
     }
 
     @Bean
@@ -37,11 +42,6 @@ public class CrawlerConfiguration {
     @Bean
     public Crawler spiegel(@Qualifier("jsoupCrawlerClient") CrawlerClient crawlerClient) {
         return new SpiegelCrawler(crawlerClient);
-    }
-
-    @Bean
-    public Crawler theguardian(@Qualifier("jsoupCrawlerClient") CrawlerClient crawlerClient) {
-        return new TheGuardianCrawler(crawlerClient);
     }
 
     @Bean

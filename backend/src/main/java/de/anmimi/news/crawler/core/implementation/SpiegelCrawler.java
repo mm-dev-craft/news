@@ -1,6 +1,7 @@
 package de.anmimi.news.crawler.core.implementation;
 
 import de.anmimi.news.crawler.core.AbstractCrawler;
+import de.anmimi.news.crawler.core.LinkAndDescription;
 import de.anmimi.news.crawler.core.client.CrawlerClient;
 import de.anmimi.news.crawler.core.TitleAndLink;
 import lombok.RequiredArgsConstructor;
@@ -9,13 +10,16 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
-@RequiredArgsConstructor
 @Slf4j
 public class SpiegelCrawler extends AbstractCrawler {
 
     private static final String SPIEGEL_DE = "https://www.spiegel.de/";
-    private final CrawlerClient client;
+
+    public SpiegelCrawler(CrawlerClient client) {
+        super(client);
+    }
 
     @Override
     protected Elements executeCrawling() {
@@ -27,12 +31,6 @@ public class SpiegelCrawler extends AbstractCrawler {
         String title = element.attr("aria-label").toLowerCase();
         String link = element.getElementsByTag("a").attr("href");
         return new TitleAndLink(title, link);
-    }
-
-    @Override
-    protected List<TitleAndLink> extractMultipleHeadLinesAndLinksFromDom(Element element) {
-        log.warn("The Spiegel does not provide multiple headlines and links. Skipping this element.");
-        return List.of();
     }
 
 }

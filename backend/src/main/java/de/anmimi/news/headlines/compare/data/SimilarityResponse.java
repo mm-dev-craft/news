@@ -1,11 +1,9 @@
-package de.anmimi.news.headlines;
+package de.anmimi.news.headlines.compare.data;
 
-// Expected response object for similarity evaluation.
 public class SimilarityResponse {
     private String summary;
     private int similarityScore;
 
-    // Default constructor and getters (or use Lombok @Data/@Value if preferred)
     public SimilarityResponse() {
     }
 

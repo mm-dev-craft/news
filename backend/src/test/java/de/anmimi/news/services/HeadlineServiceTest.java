@@ -1,8 +1,8 @@
 package de.anmimi.news.services;
 
 
-import de.anmimi.news.data.Headline;
-import de.anmimi.news.data.HeadlineRepository;
+import de.anmimi.news.headlines.data.Headline;
+import de.anmimi.news.headlines.data.HeadlineRepository;
 import de.anmimi.news.headlines.HeadlineService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

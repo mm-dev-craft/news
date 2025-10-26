@@ -4,6 +4,7 @@ interface HeadlineData {
     source: string;
     crawlingDate: string;
     keywords: string[];
+    id: string;
 }
 
 export default HeadlineData;

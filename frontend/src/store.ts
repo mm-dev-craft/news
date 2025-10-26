@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import HeadlineData from "./headlines/headlineData.ts";
+import {create} from 'zustand';
+import HeadlineData from "./headlines/headline-data.ts";
 
 interface AppState {
     hours: number;
@@ -7,19 +7,19 @@ interface AppState {
     headlines: HeadlineData[];
     addHeadlines: (headlines: HeadlineData[]) => void;
     setHeadlines: (headlines: HeadlineData[]) => void;
-    // New: store the active keywords
     selectedKeywords: string[];
     toggleKeyword: (keyword: string) => void;
+    similiarHeadlinesList: { id: string };
+    setSimiliarHeadlinesList: (similiarHeadlinesList: { id: string }) => void;
 }
 
 export const useStore = create<AppState>((set) => ({
     hours: 3,
-    setHours: (hours) => set({ hours }),
+    setHours: (hours) => set({hours}),
     headlines: [],
     addHeadlines: (headlines) =>
-        set((state) => ({ headlines: [...state.headlines, ...headlines] })),
-    setHeadlines: (headlines) => set({ headlines }),
-    // Initialize as empty and toggle to add/remove keywords
+        set((state) => ({headlines: [...state.headlines, ...headlines]})),
+    setHeadlines: (headlines) => set({headlines}),
     selectedKeywords: [],
     toggleKeyword: (keyword: string) =>
         set((state) => ({
@@ -27,4 +27,6 @@ export const useStore = create<AppState>((set) => ({
                 ? state.selectedKeywords.filter((k) => k !== keyword)
                 : [...state.selectedKeywords, keyword],
         })),
+    similiarHeadlinesList: {id: ""},
+    setSimiliarHeadlinesList: (similiarHeadlinesList) => set({similiarHeadlinesList}),
 }));

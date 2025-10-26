@@ -1,14 +1,17 @@
 package de.anmimi.news.crawler.core.implementation;
 
 import de.anmimi.news.crawler.core.AbstractCrawler;
-import de.anmimi.news.crawler.core.client.CrawlerClient;
+import de.anmimi.news.crawler.core.HeadlineSourceAndContent;
+import de.anmimi.news.crawler.core.LinkAndDescription;
 import de.anmimi.news.crawler.core.TitleAndLink;
+import de.anmimi.news.crawler.core.client.CrawlerClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -37,4 +40,10 @@ public class AljazeraCrawler extends AbstractCrawler {
         return List.of();
     }
 
+    @Override
+    public CompletableFuture<LinkAndDescription> crawleText(String url) {
+        Elements elements = client.load(url, "p");
+        String description = elements.text();
+        return CompletableFuture.completedFuture(new LinkAndDescription(url, description));
+    }
 }

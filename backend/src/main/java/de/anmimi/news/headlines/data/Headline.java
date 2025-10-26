@@ -1,30 +1,29 @@
 package de.anmimi.news.data;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @ToString
 @Getter
 @EqualsAndHashCode
 @Document(collection = "headlines")
 public class Headline {
 
+    @Id
+    private String id;
+
     @EqualsAndHashCode.Exclude
-    private String title;
-    private String link;
-    private String source;
+    private final String title;
+    private final String link;
+    private final String source;
     @EqualsAndHashCode.Exclude
-    private Set<String> keywords;
+    private final Set<String> keywords;
     @EqualsAndHashCode.Exclude
-    private LocalDateTime crawlingDate;
+    private final LocalDateTime crawlingDate;
 
 }

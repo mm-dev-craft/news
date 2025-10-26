@@ -1,5 +1,5 @@
 import axios from 'axios';
-import HeadlineData from '../headlines/headlineData.ts';
+import HeadlineData from './headline-data.ts';
 
 const apiClient = axios.create({
     baseURL: '/api/news', // Use the proxied base URL

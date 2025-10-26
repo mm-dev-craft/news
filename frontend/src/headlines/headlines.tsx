@@ -4,11 +4,19 @@ import { ScrollArea, Stack, Text, Group, Badge, SimpleGrid } from "@mantine/core
 import { useStore } from "../store";
 import { getAllHeadlines } from "./headline.client.ts";
 import { useMediaQuery } from "@mantine/hooks";
+import {useNavigate} from "react-router-dom";
 
 const Headlines = () => {
-    const { hours, headlines, setHeadlines, selectedKeywords, toggleKeyword } = useStore();
+    const { hours, headlines, setHeadlines, selectedKeywords, toggleKeyword, setSimiliarHeadlinesList } = useStore();
     const isSmallScreen = useMediaQuery('(max-width: 768px)');
     const [selectedSources, setSelectedSources] = useState<string[]>([]);
+    const navigate = useNavigate();
+
+
+    const navigateToRelatedHeadlines = (id: string) => {
+        setSimiliarHeadlinesList({id: id});
+        navigate("/similiar-headlines");
+    }
 
     useEffect(() => {
         const fetchHeadlines = async () => {
@@ -118,12 +126,14 @@ const Headlines = () => {
                 <Stack spacing="sm" m={20}>
                     {filteredHeadlines.map((headline) => (
                         <Headline
+                            id={headline.id}
                             key={headline.link}
                             crawlingDate={headline.crawlingDate}
                             link={headline.link}
                             source={headline.source}
                             title={headline.title}
                             keywords={headline.keywords}
+                            relatedArticles={(id) => navigateToRelatedHeadlines(id)}
                         />
                     ))}
                 </Stack>

@@ -13,14 +13,13 @@
     "@mantine/core": "^6.0.22",
     "@mantine/hooks": "^6.0.22",
     "@tabler/icons-react": "^3.29.0",
-    "axios": "^1.7.9",
+    "axios": "^1.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
-    "@types/axios": "^0.9.36",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
